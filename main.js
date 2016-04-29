@@ -6,8 +6,6 @@
 // Tell the user the number of stops AND the stops IN ORDER that they will pass through or change at.
 
 
-
-
 // We will have three arrays, one for each line. Each array will list stations on that line as the values of the arrays.
 // Begin with travel through one array only...
 // Two variables will be required, startStation & endStation.
@@ -20,6 +18,8 @@
 // Expand for cross - line jurneys....
 // MTA Object containing three array's, one for each line?
 
+// USER INPUT (variables provided) WE CAN WORK WITH INCLUDES:
+// startStation, whatLineTheyStartOn, endStation, whatLineTheyEndOn
 
 
 
