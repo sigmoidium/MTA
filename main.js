@@ -21,6 +21,8 @@
 // MTA Object containing three array's, one for each line?
 
 
+
+
 var lineN = [
   "Times Square",
   "34th",
@@ -47,8 +49,8 @@ var line6 = [
   "Astor Place"
 ];
 
-var startStation = "8th";
-var endStation = "Times Square";
+var startStation = "34th";
+var endStation = "8th";
 
 var startIndex = lineN.indexOf(startStation);
 var endIndex = lineN.indexOf(endStation);
@@ -64,8 +66,8 @@ if(startIndex < endIndex) {
   }
 } else {
 
-  for(var i = endIndex; i >= startIndex; i -= 1) {
-    tripMessage += lineN[i];
+  for(var i = startIndex; i >= endIndex; i -= 1) {
+    tripMessage += lineN[i] + " ";
     tripCounter += 1
   }
 }
