@@ -1,76 +1,93 @@
-// There are 3 subway lines:
-// The N line has the following stops: Times Square, 34th, 28th, 23rd, Union Square, and 8th
-// The L line has the following stops: 8th, 6th, Union Square, 3rd, and 1st
-// The 6 line has the following stops: Grand Central, 33rd, 28th, 23rd, Union Square, and Astor Place.
-// All 3 subway lines intersect at Union Square, but there are no other intersection points. (For example, this means the 28th stop on the N line is different than the 28th street stop on the 6 line, so you'll have to differentiate this when you name your stops in the arrays.)
-// Tell the user the number of stops AND the stops IN ORDER that they will pass through or change at.
-
-
-// We will have three arrays, one for each line. Each array will list stations on that line as the values of the arrays.
-// Begin with travel through one array only...
-// Two variables will be required, startStation & endStation.
-// find indexOf startStation & endStation
-// if startStation < endStation loop forward ++
-// if startStation > endStation loop backward --
-// Loop will add each iteration to a string, used to print stops passed
-// Loop will add to a count variable with each iteration used to print total stops
-
-// Expand for cross - line jurneys....
-// MTA Object containing three array's, one for each line?
-
-// USER INPUT (variables provided) WE CAN WORK WITH INCLUDES:
-// startStation, whatLineTheyStartOn, endStation, whatLineTheyEndOn
-
-
-
-var lineN = [
-  "Times Square",
-  "34th",
-  "28th",
-  "23rd",
-  "Union Square",
-  "8th"
-];
-
-var lineL = [
-  "8th",
-  "6th",
-  "Union Square",
-  "3rd",
-  "1st"
-];
-
-var line6 = [
-  "Grand Central",
-  "33rd",
-  "28th",
-  "23rd",
-  "Union Square",
-  "Astor Place"
-];
-
-var startStation = "34th";
-var endStation = "8th";
-
-var startIndex = lineN.indexOf(startStation);
-var endIndex = lineN.indexOf(endStation);
-
-var tripMessage = "You must travel through the following stops on the N line: ";
+var trip = {
+  nLine: ["Time Square", "34th", "28th", "23rd", "Union Square", "8th"],
+  lLine: ["8th", "6th", "Union Square", "3rd", "1st"],
+  sixLine: ["Grand Central", "33rd", "28th", "23rd", "Union Square", "Astor Place"]
+}
+var needsToChange = false  ;
+var secondTrip = false;
+var nLine = trip.nLine;
+var lLine = trip.lLine;
+var sixLine= trip.sixLine;
+var startLine = prompt("Which line will you depart from");
+var endLine = prompt("which line with you arrive at");
+var locationA = prompt("Which station will you depart from")
+var locationB = prompt("Which station will you arrive at")
 var tripCounter = 0;
+var transferCounter = 0;
 
-if(startIndex < endIndex) {
-
-  for(var i = startIndex; i <= endIndex; i += 1) {
-    tripMessage += lineN[i] + " ";
-    tripCounter += 1
-  }
-} else {
-
-  for(var i = startIndex; i >= endIndex; i -= 1) {
-    tripMessage += lineN[i] + " ";
-    tripCounter += 1
-  }
+if(startLine === "N")  {
+  var lineA = nLine;
+} else if(startLine === "L") {
+  var lineA = lLine;
+} else if(startLine === "6") {
+  var lineA = sixLine;
 }
 
-console.log(tripMessage);
-console.log(tripCounter + " stops in total");
+if(endLine != startLine)  {
+  var needsToChange = true;
+}
+if(endLine === "N")  {
+  var lineB = nLine;
+} else if(endLine === "L") {
+  var lineB = lLine;
+} else if(endLine === "6") {
+  var lineB = sixLine;
+}
+var stationA = lineA.indexOf(locationA);
+var stationB = lineB.indexOf(locationB);
+
+var myTrip = function(startIndex, endIndex) {
+  var message = "";
+  var countMyTrip = 0;
+
+  if(needsToChange === true)  {
+    endIndex = lineA.indexOf("Union Square");
+  }
+  if(startIndex < endIndex)  {
+    for(var i = startIndex; i <= endIndex; i += 1)  {
+      var output = lineA[i];
+      tripCounter++;
+      message += output + " ";
+      }
+  } else if(startIndex > endIndex)  {
+      for(var i = startIndex; i >= endIndex; i -= 1)  {
+        var output  = lineA[i];
+        message += output + " ";
+        tripCounter++;
+      }
+    }
+  console.log("Your must travel through the following stops on the Line " + startLine + ": " + message + ".");
+  return tripCounter;
+};
+
+var myTransfer = function(startIndex, endIndex) {
+  var message = "";
+  var countMyTransfer = 0;
+
+  if(secondTrip === true) {
+    startIndex = lineB.indexOf("Union Square");
+  }
+  if(startIndex < endIndex)  {
+    for(var i = startIndex - 1; j <= endIndex; i += 1)  {
+      var output = lineB[i];
+      message += output + " ";
+      transferCounter++;
+      }
+  } else if(startIndex > endIndex)  {
+      for(var i = startIndex - 1; i >= endIndex; i -= 1)  {
+        var output  = lineB[i];
+        message += output + " ";
+        transferCounter++;
+      }
+    }
+  console.log("Your journey continues through the following stops Line "  + endLine + ": " + message + ".");
+  return transferCounter;
+}
+
+myTrip(stationA, stationB)
+if(needsToChange === true){
+  console.log("Change at Union Square.")
+  secondTrip = true;
+  myTransfer(stationA, stationB)
+}
+console.log(tripCounter + transferCounter - 2 + " stops in total.");
